@@ -1,0 +1,16 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    container_name: interview-sched-db
+    networks:
+      - app-bridge
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: vferreira_admin
+      POSTGRES_DB: interview_sched
+
+networks:
+  app-bridge:
+    driver: bridge

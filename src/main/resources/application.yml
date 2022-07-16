@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:interview_sched}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWD:vferreira_admin}
+  jpa:
+    hibernate:
+      ddl-auto: none
+  sql:
+    init:
+      mode: always
+
+server:
+  servlet:
+    context-path: /api
