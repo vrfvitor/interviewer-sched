@@ -1,9 +1,11 @@
 package com.vrfvitor.interviewsched;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import io.zonky.test.db.*;
+import org.junit.jupiter.api.*;
+import org.springframework.boot.test.context.*;
 
 @SpringBootTest
+@AutoConfigureEmbeddedDatabase
 class InterviewSchedApplicationTests {
 
     @Test
