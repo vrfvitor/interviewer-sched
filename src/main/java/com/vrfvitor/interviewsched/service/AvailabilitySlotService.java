@@ -20,6 +20,10 @@ public class AvailabilitySlotService {
         slotRepository.saveAll(slots);
     }
 
+    public List<AvailabilitySlot> findMatches(Participant candidate, List<UUID> interviewersIds) {
+        return slotRepository.findInterviewersAvailabilitiesMatchingOf(candidate.getId(), interviewersIds);
+    }
+
     public ArrayList<AvailabilitySlot> toAvailabilitySlots(Availability availability, Participant participant) {
         var slots = new ArrayList<AvailabilitySlot>();
         var rangeSize = availability.getDiffHours();

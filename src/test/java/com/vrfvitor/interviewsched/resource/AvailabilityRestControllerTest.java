@@ -1,5 +1,6 @@
 package com.vrfvitor.interviewsched.resource;
 
+import com.vrfvitor.interviewsched.model.*;
 import com.vrfvitor.interviewsched.repository.*;
 import io.restassured.*;
 import io.restassured.http.*;
@@ -67,6 +68,39 @@ public class AvailabilityRestControllerTest {
         assertEquals(candidateSlots.get(0).getDate(), date);
         assertEquals(candidateSlots.get(1).getStartTime(), nineAm);
         assertEquals(candidateSlots.get(1).getDate(), date);
+    }
+
+    @Test
+    @Sql({"/schema.sql", "/data-test.sql", "/availability-test.sql"})
+    public void givenMatchingAvailabilitiesThenReturn200AndListOfSlots() throws JSONException {
+        var uri = String.format("%s/candidate/%s/interviewers", BASE_URI, "bdeafd24-da0f-4581-96e9-07c1f01ae89e");
+
+        var interviewerPedro = new Participant(UUID.fromString("59064b6c-f40d-427b-8c6f-f8ebda281eff"));
+        var interviewerFelipe = new Participant(UUID.fromString("af7cc534-5eb1-470c-8ccf-8d9907019c2a"));
+
+        RestAssured
+                .given()
+                .contentType(ContentType.JSON)
+                .with()
+                .queryParam("id", interviewerPedro.getId())
+                .queryParam("id", interviewerFelipe.getId())
+                .when()
+                .get(uri)
+                .then()
+                .log().body()
+                .statusCode(HttpStatus.OK.value())
+                .body("size()", is(3))
+                .body("[0].date", is("2022-07-25"))
+                .body("[0].startTime", is("08:00:00"))
+                .body("[0].participant.id", is(interviewerPedro.getId().toString()))
+
+                .body("[1].date", is("2022-07-25"))
+                .body("[1].startTime", is("08:00:00"))
+                .body("[1].participant.id", is(interviewerFelipe.getId().toString()))
+
+                .body("[2].date", is("2022-07-26"))
+                .body("[2].startTime", is("09:00:00"))
+                .body("[2].participant.id", is(interviewerFelipe.getId().toString()));
     }
 
     @Test
