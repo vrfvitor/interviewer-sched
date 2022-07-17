@@ -20,7 +20,7 @@ public class AvailabilitySlotService {
         slotRepository.saveAll(slots);
     }
 
-    private ArrayList<AvailabilitySlot> toAvailabilitySlots(Availability availability, Participant participant) {
+    public ArrayList<AvailabilitySlot> toAvailabilitySlots(Availability availability, Participant participant) {
         var slots = new ArrayList<AvailabilitySlot>();
         var rangeSize = availability.getDiffHours();
         var hourSlot = availability.startTime;
