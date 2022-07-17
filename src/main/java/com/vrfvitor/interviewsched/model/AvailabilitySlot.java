@@ -7,7 +7,8 @@ import javax.persistence.*;
 import java.time.*;
 import java.util.*;
 
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -15,7 +16,7 @@ import java.util.*;
 public class AvailabilitySlot {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "date")
@@ -25,8 +26,14 @@ public class AvailabilitySlot {
     private LocalTime startTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "participant_email")
+    @JoinColumn(name = "participant_id")
     private Participant participant;
+
+    public AvailabilitySlot(LocalDate date, LocalTime startTime, Participant participant) {
+        this.date = date;
+        this.startTime = startTime;
+        this.participant = participant;
+    }
 
     @Override
     public boolean equals(Object o) {

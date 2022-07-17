@@ -2,8 +2,11 @@ package com.vrfvitor.interviewsched.model;
 
 import lombok.*;
 import org.hibernate.*;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.*;
 
 @Getter
@@ -15,6 +18,10 @@ import java.util.*;
 public class Participant {
 
     @Id
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
+    private UUID id;
+
     @Column(name = "email")
     private String email;
 
@@ -25,7 +32,7 @@ public class Participant {
     private String lastName;
 
     @Column(name = "is_interviewer")
-    private boolean isInterviewer;
+    private boolean interviewer;
 
     public Participant(String email) {
         this.email = email;
